@@ -1,2 +1,2 @@
 # MKS22X
-Homework repo for APCS
+Homework repo for APCS (Spring term)
