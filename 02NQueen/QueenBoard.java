@@ -38,7 +38,8 @@ public class QueenBoard{
 	resetBoard();
 	solutionCount = isSolution(board, 0);
     }
-    
+
+    // Helper function to add up all the unique solutions
     private int isSolution(int[][] tempBoard, int col){
 	if(col >= size){
 	    return 1;
@@ -54,6 +55,7 @@ public class QueenBoard{
 	return count;
     }
 
+    // Helper function to check if the Queen is in danger
     private boolean isValid(int[][] tempBoard, int row, int col){
 	for(int i = 0; i < col; i++){
 	    if(tempBoard[row][i] == 1){
@@ -178,6 +180,7 @@ public class QueenBoard{
 	return temp;
     }
 
+    // Print out the input 2D int array
     public String print(int[][] board){
 	String temp = "";
 	for(int i = 0; i < size; i++){
@@ -194,11 +197,18 @@ public class QueenBoard{
 
     
     public static void main(String[] args){
-	for(int i = 1; i < 15; i++){
+	/*for(int i = 1; i < 16; i++){
+	    long startTime = System.currentTimeMillis();
 	    QueenBoard a = new QueenBoard(i);
-	    a.countSolutions();
-	    System.out.println("Size " + i + ": " + a.getCount());
-	}
+	    a.solve();
+	    long endTime = System.currentTimeMillis();
+	    System.out.println("Size " + i + ":\n" + a.print() + "Runtime: " + (endTime - startTime));
+	    }*/
+
+	QueenBoard a = new QueenBoard(40);
+	a.solve();
+	System.out.println(a.print());
+	
     }
 }
 
