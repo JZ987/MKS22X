@@ -47,9 +47,7 @@ public class QueenBoard{
 	for(int i = 0; i < size; i++){
 	    if(isValid(tempBoard, i, col)){
 		tempBoard[i][col] = 1;
-		if(isSolution(tempBoard, col + 1) == 1){
-		    count += isSolution(tempBoard, col + 1);
-		}
+		count += isSolution(tempBoard, col + 1);
 		tempBoard[i][col] = 0;
 	    }
 	}
@@ -196,13 +194,11 @@ public class QueenBoard{
 
     
     public static void main(String[] args){
-	QueenBoard a = new QueenBoard(6);
-	//System.out.println(a);
-	//a.solve();
-	//System.out.println(a.print());
-
-	a.countSolutions();
-	System.out.println(a.getCount());
+	for(int i = 1; i < 15; i++){
+	    QueenBoard a = new QueenBoard(i);
+	    a.countSolutions();
+	    System.out.println("Size " + i + ": " + a.getCount());
+	}
     }
 }
 
