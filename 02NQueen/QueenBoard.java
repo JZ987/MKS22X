@@ -2,7 +2,7 @@ public class QueenBoard{
 
     private int[][] board;
     private int size;
-    private int solutionCount;
+    private int solutionCount = -1;
 
     // Create a new QueenBoard with input size
     public QueenBoard(int size){
@@ -205,7 +205,7 @@ public class QueenBoard{
 	    System.out.println("Size " + i + ":\n" + a.print() + "Runtime: " + (endTime - startTime));
 	    }*/
 
-	QueenBoard a = new QueenBoard(40);
+	QueenBoard a = new QueenBoard(20);
 	a.solve();
 	System.out.println(a.print());
 	
