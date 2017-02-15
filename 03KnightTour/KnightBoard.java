@@ -18,11 +18,23 @@ public class KnightBoard{
 	if(ID == row * col){
 	    return true;
 	}
+	
 	return false;
     }
 
     public String toString(){
-	return "";
+	String temp = "";
+	for(int row = 0; row < board.length; row++){
+	    for(int col = 0; col < board[0].length; col++){
+		if(board[row][col] < 10){
+		    temp += " " + board[row][col] + " ";
+		}else{
+		    temp += board[row][col] + " ";
+		}
+	    }
+	    temp += "\n";
+	}
+	return temp;
     }
     
 }
