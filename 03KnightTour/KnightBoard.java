@@ -3,6 +3,8 @@ public class KnightBoard{
     private int[][] board;
     private int row;
     private int col;
+    private int[] rowMove = {-2, -2, -1, -1, 1, 1, 2, 2};
+    private int[] colMove = {1, -1, 2, -2, 2, -2, 1, -1};
 
     public KnightBoard(int startingRow, int startingCol){
 	board = new int[startingRow][startingCol];
@@ -11,37 +13,38 @@ public class KnightBoard{
     }
     
     public void solve(){
-	solveH(0, 0, 1);
+	board[0][0] = 1;
+	if(!solveH(0, 0, 2)){
+	    System.out.println("There is no solution for this board");
+	}
     }
 
     private boolean solveH(int row, int col, int ID){
-	//System.out.println(print(board));
+	int next_row, next_col;
 	if(ID > this.row * this.col){
 	    return true;
 	}
-	if(row < 0 || col < 0 || row >= this.row || col >= this.col){
-	    return false;
-	}
-	if(board[row][col] == 0){
-	    board[row][col] = ID;
-	    if(nextMove(row, col, ID + 1)){
-		return true;
-	    }else{
-		board[row][col] = 0;
+	for(int i = 0; i < 8; i++){
+	    next_row = row + rowMove[i];
+	    next_col = col + colMove[i];
+	    if(isSafe(next_row, next_col)){
+		board[next_row][next_col] = ID;
+		if(solveH(next_row, next_col, ID + 1)){
+		    return true;
+		}else{
+		    board[next_row][next_col] = 0;
+		}
 	    }
 	}
 	return false;
     }
 
-    private boolean nextMove(int row, int col, int ID){
-	return solveH(row-2, col-1, ID) ||
-	       solveH(row-2, col+1, ID) ||
-	       solveH(row-1, col-2, ID) ||
-	       solveH(row+1, col-2, ID) ||
-	       solveH(row+2, col-1, ID) ||
-	       solveH(row+2, col+1, ID) ||
-	       solveH(row+1, col+2, ID) ||
-	       solveH(row+1, col-2, ID);
+    private boolean isSafe(int row, int col){
+	return (row >= 0 &&
+		row < this.row &&
+		col >= 0 &&
+		col < this.col &&
+		board[row][col] == 0);
     }
 
     private String print(int[][] board){
@@ -75,7 +78,7 @@ public class KnightBoard{
     }
     
     public static void main(String[] args){
-	KnightBoard a = new KnightBoard(4, 4);
+	KnightBoard a = new KnightBoard(8, 8);
 	a.solve();
 	System.out.println(a);
     }
