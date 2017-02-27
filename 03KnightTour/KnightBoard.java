@@ -13,8 +13,7 @@ public class KnightBoard{
     }
     
     public void solve(){
-	board[0][0] = 1;
-	if(!solveH(0, 0, 2)){
+	if(!solveH(0, 0, 1)){
 	    System.out.println("There is no solution for this board");
 	}
     }
@@ -27,12 +26,12 @@ public class KnightBoard{
 	for(int i = 0; i < 8; i++){
 	    next_row = row + rowMove[i];
 	    next_col = col + colMove[i];
-	    if(isSafe(next_row, next_col)){
-		board[next_row][next_col] = ID;
+	    if(isSafe(row, col)){
+		board[row][col] = ID;
 		if(solveH(next_row, next_col, ID + 1)){
 		    return true;
 		}else{
-		    board[next_row][next_col] = 0;
+		    board[row][col] = 0;
 		}
 	    }
 	}
@@ -78,7 +77,7 @@ public class KnightBoard{
     }
     
     public static void main(String[] args){
-	KnightBoard a = new KnightBoard(8, 8);
+	KnightBoard a = new KnightBoard(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
 	a.solve();
 	System.out.println(a);
     }
