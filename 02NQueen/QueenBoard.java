@@ -139,7 +139,7 @@ public class QueenBoard{
     }
 
     // Accessor method to get the total solutions a QueenBoard have
-    public int getCount(){
+    public int getSolutionCount(){
 	return solutionCount;
     }
 
