@@ -1,24 +1,32 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class Maze{
     private char[][] maze;
+    private int row = 0;
+    private int col = 0;
+    private String file;
     
-    public Maze(){
-
+    public Maze(String fileName){
+	scanFile(fileName);
+	System.out.println(file);
+	initializeMaze();
     }
 
-
-    public static void main(String args[]) throws FileNotFoundException {
-        //instead of a try/catch, you can throw the FileNotFoundException.
-        File infile = new File("Maze1.txt");// can be a path"/full/path/to/file.txt" 
-        Scanner inf = new Scanner(infile);
-        int lineNumber = 1;
-        while(inf.hasNextLine()){
-            String line = inf.nextLine();
-            System.out.println(line);
-        }       
+    private void scanFile(String fileName){
+	try{
+	    Scanner inf = new Scanner(new File(fileName));
+	    while(inf.hasNextLine()){
+		row++;
+		String line = inf.nextLine();
+		System.out.println(line);
+	    }       
     }
-   
+
+    private void initializeMaze(){
+    }
+
+    public static void main(String args[]){
+	Maze b = new Maze("data1.dat");
+    }
 }
