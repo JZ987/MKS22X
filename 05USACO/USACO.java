@@ -26,8 +26,9 @@ public class USACO{
 		    instruction[i][j] = Integer.parseInt(in.next());
 		}
 	    }
-	    
-	    LakeMaking cow = new LakeMaking(row, col, elevation, steps, board, instruction);
+
+	    LakeMakingNoRecursive cow = new LakeMakingNoRecursive(row, col, elevation, steps, board, instruction);
+	    //LakeMaking cow = new LakeMaking(row, col, elevation, steps, board, instruction);
 	    finalAnswer = cow.solve();
 	}catch(FileNotFoundException e){
 	    System.out.println("File not found.");
@@ -89,7 +90,7 @@ public class USACO{
     
     public static void main(String[] args){
 	USACO x = new USACO();
-	//System.out.println(x.bronze("LakeTesting/LakeTesting8.txt"));
-	System.out.println(x.silver("CowTravel/CTravelTesting1.txt"));
+	System.out.println(x.bronze("LakeTesting/LakeTesting10.txt"));
+	//System.out.println(x.silver("CowTravel/CTravelTesting10.txt"));
     }
 }
