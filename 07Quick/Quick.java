@@ -9,7 +9,7 @@ public class Quick{
 	data = array;
     }
 
-    public static int quicksort(int k, int start, int end){
+    public static int quickselect(int k, int start, int end){
 	int index = partition(start, end);
 	if(index == k){
 	    return answer;
@@ -18,25 +18,40 @@ public class Quick{
     }
 
     public static int partition(int start, int end){
-	int index = new Random().nextInt(data.length);
-	int number = data[index];
-	int[] temp = new int[data.length];
-	for(int i = 0; i < data.length; i++){
-	    if(data[i] == number){
-		continue;
+	int index = new Random().nextInt(end - start) + start;
+	int pivot = data[index];
+	swap(index, end);
+	int count = 0;
+	int[] temp = new int[(end + 1) - start];
+	for(int i = 0; i < temp.length; i++){
+	    temp[i] = data[start + i];
+	}
+	for(int i = 0; i < temp.length; i++){
+	    if(temp[i] == pivot){
+		count++;
 	    }
-	    if(data[i] < number){
-		temp[start] = data[i];
+	    if(temp[i] < pivot){
+		data[start + i] = temp[i];
 		start++;
 	    }
-	    if(data[i] > number){
-		temp[end] = data[i];
+	    if(temp[i] > pivot){
+		//temp[end] = data[i];
 		end--;
 	    }
 	}
-	answer = number;
+	for(int i = start; i < count; i++){
+	    start++;
+	}
+	answer = pivot;
 	//temp[start] = number;
 	return start;
+    }
+
+    private static void swap(int index1, int index2){
+	int firstDigit = data[index1];
+	int secondDigit = data[index2];
+	data[index1] = secondDigit;
+	data[index2] = firstDigit;
     }
 
     public static void main(String[] args){
@@ -44,12 +59,12 @@ public class Quick{
 	int[] array = {2, 10, 15, 23, 0, 5};
 	Quick a = new Quick(array);
 	
-	System.out.println(a.quicksort(0, 0, 5));
-	System.out.println(a.quicksort(1, 0, 5));
-	System.out.println(a.quicksort(2, 0, 5));
-	System.out.println(a.quicksort(3, 0, 5));
-	System.out.println(a.quicksort(4, 0, 5));
-	System.out.println(a.quicksort(5, 0, 5));
+	System.out.println(a.quickselect(0, 0, 5));
+	System.out.println(a.quickselect(1, 0, 5));
+	System.out.println(a.quickselect(2, 0, 5));
+	System.out.println(a.quickselect(3, 0, 5));
+	System.out.println(a.quickselect(4, 0, 5));
+	System.out.println(a.quickselect(5, 0, 5));
     }
 
 
