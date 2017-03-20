@@ -4,7 +4,7 @@ public class USACO{
     private int finalAnswer;
     
     public USACO(){
-	System.out.println("Thanks for using USACO!!");
+	//System.out.println("Thanks for using USACO!!");
     }
 
     public int bronze(String fileName){
