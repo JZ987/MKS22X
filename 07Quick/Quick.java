@@ -12,7 +12,7 @@ public class Quick{
 	}
 	int index = new Random().nextInt(end - start) + start;
 	int pivot = array[index];
-	swap(array, start, pivot);
+	swap(array, start, index);
 	int lt = start;
 	int i = start + 1;
 	int gt = end;
@@ -28,9 +28,8 @@ public class Quick{
 		gt--;
 	    }
 	}
-	swap(array, start, lt);
-	quickSortHelper(array, start, lt);
-	quickSortHelper(array, gt, end);
+	quickSortHelper(array, start, lt - 1);
+	quickSortHelper(array, gt + 1, end);
     }
 
 
@@ -68,29 +67,6 @@ public class Quick{
 	return quickSelectHelper(array, k, start, end);
     }
 
-    public static int partition(int[] array, int start, int end){
-	int index = new Random().nextInt(end - start) + start;
-	int pivot = array[index];
-	swap(array, start, pivot);
-	int lt = start;
-	int i = start + 1;
-	int gt = end;
-	while(i <= gt){
-	    if(array[i] == pivot){
-		i++;
-	    }else if(array[i] < pivot){
-		swap(array, lt, i);
-		lt++;
-		i++;
-	    }else if(array[i] > pivot){
-		swap(array, i, gt);
-		gt--;
-	    }
-	}
-	swap(array, start, lt);
-	return lt;
-    }
-
     private static void swap(int[] array, int index1, int index2){
 	int firstDigit = array[index1];
 	int secondDigit = array[index2];
@@ -101,15 +77,15 @@ public class Quick{
     private static String print(int[] ary){
 	String tmp = "";
 	for(int i = 0; i < ary.length; i++){
-	    tmp += ary[i] + ", ";
+	    tmp += ary[i] + " ";
 	}
 	return tmp;
     }
 
     public static void main(String[] args){
 
-	int[] array = {2, 10, 15, 23, 0, 5};
-	
+	//int[] array = {2, 10, 15, 23, 0, 5};
+	int[] array = {99, 999, 99, 999, 0, 23, 88, 999, 99, 0};
 	System.out.println(print(array));
 	quicksort(array);
 	System.out.println(print(array));
