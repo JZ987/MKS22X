@@ -84,10 +84,16 @@ public class Quick{
 
     public static void main(String[] args){
 
-	//int[] array = {2, 10, 15, 23, 0, 5};
-	int[] array = {99, 999, 99, 999, 0, 23, 88, 999, 99, 0};
+	//int[] array = {};
+	int[] array = new int[100];
+	long startTime = System.currentTimeMillis();
+	for(int i = 0; i < array.length; i++){
+	    int num = new Random().nextInt(1000000);
+	    array[i] = num;
+	}
 	System.out.println(print(array));
 	quicksort(array);
+	System.out.println("Timer: " + (System.currentTimeMillis() - startTime));
 	System.out.println(print(array));
     }
 }
