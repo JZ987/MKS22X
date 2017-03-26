@@ -34,17 +34,13 @@ public class Quick{
 
 
     public static int quickselect(int[] array, int k){
-	if(quickSelectHelper(array, k, 0, array.length - 1)){
-	    return array[k];
-	}
-
-	return 0;
+	return quickSelectHelper(array, k, 0, array.length - 1);
     }
 
-    private static boolean quickSelectHelper(int[] array, int k, int start, int end){
+    private static int quickSelectHelper(int[] array, int k, int start, int end){
 	int index = new Random().nextInt(end - start) + start;
 	int pivot = array[index];
-	swap(array, start, pivot);
+	swap(array, start, index);
 	int lt = start;
 	int i = start + 1;
 	int gt = end;
@@ -60,40 +56,50 @@ public class Quick{
 		gt--;
 	    }
 	}
-	swap(array, start, lt);
-	if(lt <= k && k >= gt){
-	    return true;
+	if(k < lt){
+	    return quickSelectHelper(array, k, start, lt);
+	}else if(k > gt){
+	    return quickSelectHelper(array, k, gt, end);
 	}
-	return quickSelectHelper(array, k, start, end);
+	return pivot;
     }
 
     private static void swap(int[] array, int index1, int index2){
 	int firstDigit = array[index1];
-	int secondDigit = array[index2];
-	array[index1] = secondDigit;
+	array[index1] = array[index2];
 	array[index2] = firstDigit;
     }
 
     private static String print(int[] ary){
 	String tmp = "";
-	for(int i = 0; i < ary.length; i++){
+	for(int i = 0; i < ary.length - 1; i++){
 	    tmp += ary[i] + " ";
 	}
 	return tmp;
     }
 
-    public static void main(String[] args){
-
-	//int[] array = {};
-	int[] array = new int[100];
-	long startTime = System.currentTimeMillis();
+    public static void addInteger(int[] array){
 	for(int i = 0; i < array.length; i++){
-	    int num = new Random().nextInt(1000000);
+	    int num = new Random().nextInt(array.length);
 	    array[i] = num;
 	}
-	System.out.println(print(array));
+    }
+    
+    public static void main(String[] args){
+
+	//int[] array = {-1, -21, 114, 1234, 14, 0, -231, -34, 3412, -1};
+	int[] array = new int[100];
+	long startTime = System.currentTimeMillis();
+	addInteger(array);
+	System.out.println("Unsorted: " + print(array));
 	quicksort(array);
+	System.out.println("Sorted: " + print(array));
+	System.out.println("----------------------------------");
+	//System.out.println("Index 0: " + quickselect(array, 0));
+	//System.out.println("Index 5: " + quickselect(array, 5));
+	//System.out.println("Index 4: " + quickselect(array, 4));
+	//System.out.println("Index 8: " + quickselect(array, 8));
+	//System.out.println("Index 3: " + quickselect(array, 3));
 	System.out.println("Timer: " + (System.currentTimeMillis() - startTime));
-	System.out.println(print(array));
     }
 }
