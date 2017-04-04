@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class MyLinkedList{
 
     private LNode start, end, current;
@@ -11,31 +13,45 @@ public class MyLinkedList{
     }
 
     public boolean add(int value){
+	add(size, value);
+	/*
 	if(size == 0){
 	    start = new LNode(value);
 	    end = start;
-	    current = start;
 	    size++;
 	    return true;
 	}
-	current = end;
-	current.setNext(value);
-	end = current.getNext();
-	size++;
+	end.next = new LNode(value);
+	end = end.next;
+	size++;*/
 	return true;
     }
 
-    public int get(int index){
-	current = start;
-	while(index != 0){
-	    index--;
-	    current = current.getNext();
+    public boolean add(int index, int value){
+	
+    }
+    
+    private LNode getNthNode(int n){
+	try{
+	    current = start;
+	    while(n != 0){
+		current = current.next;
+		n--;
+	    }
+	    return current;
+	}catch(IndexOutOfBoundException e){
+	    System.out.println("Index out of bound");
 	}
-	return current.getValue();
+    }
+
+    public int get(int index){
+	return getNthNode(index).value;
     }
 
     public int set(int index, int newValue){
-	
+	int oldValue = get(index);
+	current.value = newValue;
+	return oldValue;
     }
 
     public int size(){
@@ -45,11 +61,12 @@ public class MyLinkedList{
     public String toString(){
 	String temp = "[";
 	current = start;
-	while(current.getNext() != null){
-	    temp += current.getValue() + ", ";
-	    current = current.getNext();
+	while(current.next != null){
+	    temp += current.toString();
+	    //temp += "(" + current.prev.value + ")" + current.toString() + "(" + current.next.value + ")";
+	    current = current.next;
 	}
-	temp += current.getValue() + "]";
+	temp += current.value + "]";
 	return temp;
     }
 
@@ -57,30 +74,18 @@ public class MyLinkedList{
 
 
 
-    class LNode{
+    private class LNode{
 	
-	private int value;
-	private LNode next, prev;
+	int value;
+	LNode next, prev;
 
 	public LNode(int value){
 	    this.value = value;
 	    next = null;
 	}
 
-	public LNode getPrev(){
-	    return prev;
-	}
-
-	public LNode getNext(){
-	    return next;
-	}
-
-	public void setNext(int value){
-	    next = new LNode(value);
-	}
-
-	public int getValue(){
-	    return value;
+	public String toString(){
+	    return value + ",";
 	}
     }
 
