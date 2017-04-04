@@ -4,7 +4,6 @@ public class Merge{
 	if(ary.length <= 1){
 	    return;
 	}
-	System.out.println((int)ary.length/2);
 	int[] left = separate(ary, 0, (int)ary.length/2);
 	int[] right = separate(ary, (int)ary.length/2, ary.length);
 	mergesort(left);
@@ -26,12 +25,18 @@ public class Merge{
 	int i = 0;
 	int j = 0;
 	for(int n = 0; n < result.length; n++){
-	    if(a[i] <= b[j]){
-		result[n] = a[i];
-		i++;
-	    }else{
-		result[n] = b[j];
-		j++;
+	    if (i >= b.length) {
+                result[n] = a[j];
+                j++;
+            }else if (j >= a.length) {
+                result[n] = b[i];
+                i++;
+            }else if (b[i] < a[j]) {
+                result[n] = b[i];
+                i++;
+            }else {
+                result[n] = a[j];
+                j++;
 	    }
 	}
     }
