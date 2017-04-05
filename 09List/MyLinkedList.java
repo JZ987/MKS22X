@@ -1,9 +1,9 @@
 import java.util.*;
 
-public class MyLinkedList{
+public class MyLinkedList implements Iterable<Integer> {
 
-    private LNode start, end, current;
-    private int size;
+    public LNode start, end, current;
+    public int size;
 
     public MyLinkedList(){
 	start = null;
@@ -28,7 +28,20 @@ public class MyLinkedList{
     }
 
     public boolean add(int index, int value){
-	
+	if(size == 0){
+	    start = new LNode(value);
+	    end = start;
+	    size++;
+	    return true;
+	}
+	current = getNthNode(index-1);
+	LNode newNode = new LNode(value);
+	newNode.next = current.next;
+	newNode.prev = current;
+	current.next.prev = newNode;
+	current.next = newNode;
+	size++;
+	return true;
     }
     
     private LNode getNthNode(int n){
@@ -39,7 +52,7 @@ public class MyLinkedList{
 		n--;
 	    }
 	    return current;
-	}catch(IndexOutOfBoundException e){
+	}catch(IndexOutOfBoundsException e){
 	    System.out.println("Index out of bound");
 	}
     }
@@ -57,6 +70,10 @@ public class MyLinkedList{
     public int size(){
 	return size;
     }
+    
+    public Iterator<Integer> iterator(){
+	return new LinkedListIterator(this);
+    }
 
     public String toString(){
 	String temp = "[";
@@ -70,10 +87,6 @@ public class MyLinkedList{
 	return temp;
     }
 
-
-
-
-
     private class LNode{
 	
 	int value;
@@ -86,6 +99,38 @@ public class MyLinkedList{
 
 	public String toString(){
 	    return value + ",";
+	}
+    }
+
+
+
+    public class LinkedListIterator implements Iterator<Integer> {
+
+	public MyLinkedList list;
+	public LNode location;
+	
+	public LinkedListIterator(MyLinkedList list){
+	    this.list = list;
+	    location = list.start;
+	}
+
+	public boolean hasNext(){
+	    return location.next != null;
+	}
+	
+	public Integer next(){
+	    if (hasNext()){
+		int value = location.value;
+		location = location.next;
+		return value;
+	    }
+	    else {
+		throw new NoSuchElementException();
+	    }
+	}
+        
+	public void remove(){
+	    throw new UnsupportedOperationException();
 	}
     }
 
