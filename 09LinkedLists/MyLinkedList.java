@@ -46,7 +46,7 @@ public class MyLinkedList implements Iterable<Integer> {
     public int remove(int index){
 	current = getNthNode(index);
 	int oldValue = current.value;
-	if(size == 1){
+	if(size == 1 && index == 0){
 	    start = null;
 	    end = start;
 	}else if(index == 0){
@@ -102,11 +102,33 @@ public class MyLinkedList implements Iterable<Integer> {
     public Iterator<Integer> iterator(){
 	return new LinkedListIterator(this);
     }
-
+    
     public int size(){
 	return size;
     }
-    
+
+    public String enhancedPrint(){
+	String temp = "[";
+	current = start;
+	while(current.next != null){
+	    if(current.prev == null){
+		temp += "(null)";
+	    }else{
+		temp += "(" + current.prev.value + ")";
+	    }
+	    temp += current.value;
+	    if(current.next == null){
+		temp += "(null)";
+	    }else{
+		temp += "(" + current.next.value + ")";
+	    }
+	    temp += ", ";
+	    current = current.next;
+	}
+	temp += "(" + current.prev.value + ")" + current.value + "(null)]";
+	return temp;
+    }
+
     public String toString(){
 	if(size == 0){
 	    return "[]";
@@ -115,7 +137,6 @@ public class MyLinkedList implements Iterable<Integer> {
 	current = start;
 	while(current.next != null){
 	    temp += current.toString();
-	    //temp += "(" + current.prev.value + ")" + current.toString() + "(" + current.next.value + ")";
 	    current = current.next;
 	}
 	temp += current.value + "]";
@@ -176,7 +197,30 @@ public class MyLinkedList implements Iterable<Integer> {
     }
 
 
+    
     public static void main(String[] args){
+	MyLinkedList hi = new MyLinkedList();
+	Random rand = new Random();
+
+	for(int i = 0; i < 10000000; i++){
+	    hi.add(rand.nextInt(500));
+	}
+
+	System.out.println("Size: " + hi.size);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    /*public static void main(String[] args){
 	//Testing: constructor, toString, size, add, get, remove
 	
 	MyLinkedList a= new MyLinkedList();
@@ -192,7 +236,8 @@ public class MyLinkedList implements Iterable<Integer> {
 	}
 	
 	System.out.println(a+"\nSize: "+a.size());//odds 0-20 in order, size=10
-	
+	System.out.println(a.enhancedPrint());
+
 	//Testing: set, indexOf, add(i,v); reinforce others
 	for(int i=0; i<10; i++){
 	    a.set(i,i*100);
@@ -233,5 +278,5 @@ public class MyLinkedList implements Iterable<Integer> {
 	    System.out.print(s+" ");
 	}
 	//should be same
-    }
+	}*/
 }
