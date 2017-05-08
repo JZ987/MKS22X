@@ -50,8 +50,9 @@ public class MyHeap{
 	}
     }
 
-    private void pushDown(){
-	int n = 1;
+    private void pushDown(int index){
+	    
+	/*
 	while(n*2 <= size || n*2+1 <= size){
 	    if(n*2+1 <= size){
 		if(heap.get(n).compareTo(heap.get(n*2)) <= 0 && 
@@ -71,7 +72,7 @@ public class MyHeap{
 		    n *= 2;
 		}
 	    }
-	}
+	    }*/
     }
 
     private void swap(int first, int second){
