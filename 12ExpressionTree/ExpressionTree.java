@@ -1,38 +1,5 @@
 public class ExpressionTree{
-    
-    /*return the value of the specified expression tree*/
-    public double evaluate(){
-	/*you are to write this method*/
-	return 0.0;
-    }
-    
-    /*return the expression as an infix notation string with parenthesis*/
-    /* The sample tree would be: "( 3 + (2 * 10))"     */
-    public String toString(){
-	/*you are to write this method*/
-	return "";
-    }
-    
-    /*return the expression as a postfix notation string without parenthesis*/
-    /* The sample tree would be: "3 2 10 * +"     */
-    public String toStringPostfix(){
-	/*you are to write this method*/
-	return "";
-    }
-  
-    /*return the expression as a prefix notation string without parenthesis*/
-    /* The sample tree would be: "+ 3 * 2 10"     */
-    
-    public String toStringPrefix(){
-	/*you are to write this method*/
-	return "";
-    }
-    
-    
-  
-    
-    
-    
+
     private char op;
     private double value;
     private ExpressionTree left,right;
@@ -79,11 +46,71 @@ public class ExpressionTree{
     private boolean isValue(){
 	return !hasChildren();
     }
-    
+
     private boolean hasChildren(){
 	return left != null && right != null;
     }
     
+        
+    /*return the value of the specified expression tree*/
+    public double evaluate(){
+	if(isValue()){
+	    return getValue();
+	}else{
+	    double left = getLeft().evaluate();
+	    double right = getRight().evaluate();
+	    switch(getOp()){
+	    case '+':
+		return left + right;
+	    case '-':
+		return left - right;
+	    case '*':
+		return left * right;
+	    case '/':
+		return left / right;
+	    case '%':
+		return left % right;
+	    default:
+		return 0.0;
+	    }
+	}
+    }
+    
+    /*return the expression as an infix notation string with parenthesis*/
+    /* The sample tree would be: "( 3 + (2 * 10))"     */
+    public String toString(){
+	if(isValue()){
+	    return getValue() + "";
+	}else{
+	    return "(" + getLeft() + " " + getOp() + " " + getRight() + ")";
+	}
+    }
+    
+    /*return the expression as a postfix notation string without parenthesis*/
+    /* The sample tree would be: "3 2 10 * +"     */
+    public String toStringPostfix(){
+	String temp = "";
+	if(isValue()){
+	    temp += getValue();
+	}else{
+	    temp += getLeft().toStringPostfix() + " " + getRight().toStringPostfix() + " " + getOp();
+	}
+	return temp;
+    }
+  
+    /*return the expression as a prefix notation string without parenthesis*/
+    /* The sample tree would be: "+ 3 * 2 10"     */
+    
+    public String toStringPrefix(){
+	String temp = "";
+	if(isValue()){
+	    temp += getValue();
+	}else{
+	    temp += getOp() + " " + getLeft().toStringPrefix() + " " + getRight().toStringPrefix();
+	}
+	return temp;
+    }
+
     
     public static void main(String[] args){
 	//ugly main sorry!
@@ -94,26 +121,26 @@ public class ExpressionTree{
 	System.out.println(c);
 	System.out.println(c.toStringPostfix());
 	System.out.println(c.toStringPrefix());
-	System.out.println(c.evaluate());
+	System.out.println(c.evaluate() + "\n");
 
 	
 	ExpressionTree d = new ExpressionTree('*',c,new ExpressionTree(3.5));
 	System.out.println(d);
 	System.out.println(d.toStringPostfix());
 	System.out.println(d.toStringPrefix());
-	System.out.println(d.evaluate());
+	System.out.println(d.evaluate() + "\n");
 	
 	ExpressionTree ex = new ExpressionTree('-',d,new ExpressionTree(1.0));
 	System.out.println(ex);
 	System.out.println(ex.toStringPostfix());
 	System.out.println(ex.toStringPrefix());
-	System.out.println(ex.evaluate());
+	System.out.println(ex.evaluate() + "\n");
 	
 	ex = new ExpressionTree('+',new ExpressionTree(1.0),ex);
 	System.out.println(ex);
 	System.out.println(ex.toStringPostfix());
 	System.out.println(ex.toStringPrefix());
-	System.out.println(ex.evaluate());
+	System.out.println(ex.evaluate() + "\n");
     
 	ex = new ExpressionTree('/',ex,new ExpressionTree(2.0));
 	System.out.println(ex);
