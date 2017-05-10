@@ -54,7 +54,7 @@ public class MyHeap{
 
     private void pushUp(){
 	int n = size;
-	while(n != 1 && heap.get(n).compareTo(heap.get(n/2)) > 0){
+	while(n != 1 && heap.get(n).compareTo(heap.get(n/2)) * constant > 0){
 	    swap(n, n/2);
 	    n /= 2;
 	}
@@ -64,11 +64,11 @@ public class MyHeap{
 	int n = 1;
 	while(size >= n*2){
 	    if(size >= n*2+1){
-		if(heap.get(n).compareTo(heap.get(n*2)) >= 0 && 
-		   heap.get(n).compareTo(heap.get(n*2+1)) >= 0){
+		if(heap.get(n).compareTo(heap.get(n*2)) * constant >= 0 && 
+		   heap.get(n).compareTo(heap.get(n*2+1)) * constant >= 0){
 		    return;
 		}
-		if(heap.get(n*2).compareTo(heap.get(n*2+1)) >= 0){
+		if(heap.get(n*2).compareTo(heap.get(n*2+1)) * constant >= 0){
 		    swap(n, n*2);
 		    n *= 2;
 		}else{
@@ -76,7 +76,7 @@ public class MyHeap{
 		    n = n * 2 + 1;
 		}
 	    }else{
-		if(heap.get(n).compareTo(heap.get(n*2)) >= 0){
+		if(heap.get(n).compareTo(heap.get(n*2)) * constant >= 0){
 		    return;
 		}else{
 		    swap(n, n*2);
@@ -111,6 +111,7 @@ public class MyHeap{
 	test.add("g");
 	test.add("h");
 	test.add("i");
+	/*test.remove();
 	test.remove();
 	test.remove();
 	test.remove();
@@ -120,8 +121,7 @@ public class MyHeap{
 	test.remove();
 	test.remove();
 	test.remove();
-	//test.remove();
-	//test.peek();
+	test.peek();*/
 	System.out.println(test);
     }
 }
