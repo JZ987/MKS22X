@@ -30,7 +30,14 @@ public class MyHeap{
 	pushUp();
     }
 
-    public String remove() throws NoSuchElementException{
+    public String remove(){
+	if(size == 0){
+	    throw new NoSuchElementException("\u001B[34mEmpty heap\u001B[0m");
+	}
+	if(size == 1){
+	    size--;
+	    return heap.remove(1);
+	}
 	String removed = heap.get(1);
 	heap.set(1, heap.remove(size));
 	size--;
@@ -38,7 +45,10 @@ public class MyHeap{
 	return removed;
     }
 
-    public String peek() throws NoSuchElementException{
+    public String peek(){
+	if(size == 0){
+	    throw new NoSuchElementException("\u001B[34mEmpty heap\u001B[0m");
+	}
 	return heap.get(1);
     }
 
@@ -50,29 +60,30 @@ public class MyHeap{
 	}
     }
 
-    private void pushDown(int index){
-	    
-	/*
-	while(n*2 <= size || n*2+1 <= size){
-	    if(n*2+1 <= size){
-		if(heap.get(n).compareTo(heap.get(n*2)) <= 0 && 
-		   heap.get(n).compareTo(heap.get(n*2+1)) <= 0){
-		    if(heap.get(n*2).compareTo(heap.get(n*2+1)) > 0){
-			swap(n, n*2);
-			n *= 2;
-		    }else{
-			swap(n, n*2+1);
-			n *= 2;
-			n += 1;
-		    }
+    private void pushDown(){
+	int n = 1;
+	while(size >= n*2){
+	    if(size >= n*2+1){
+		if(heap.get(n).compareTo(heap.get(n*2)) >= 0 && 
+		   heap.get(n).compareTo(heap.get(n*2+1)) >= 0){
+		    return;
+		}
+		if(heap.get(n*2).compareTo(heap.get(n*2+1)) >= 0){
+		    swap(n, n*2);
+		    n *= 2;
+		}else{
+		    swap(n, n*2+1);
+		    n = n * 2 + 1;
 		}
 	    }else{
-		if(heap.get(n).compareTo(heap.get(n*2)) < 0){
+		if(heap.get(n).compareTo(heap.get(n*2)) >= 0){
+		    return;
+		}else{
 		    swap(n, n*2);
 		    n *= 2;
 		}
 	    }
-	    }*/
+	}
     }
 
     private void swap(int first, int second){
@@ -101,6 +112,16 @@ public class MyHeap{
 	test.add("h");
 	test.add("i");
 	test.remove();
+	test.remove();
+	test.remove();
+	test.remove();
+	test.remove();
+	test.remove();
+	test.remove();
+	test.remove();
+	test.remove();
+	//test.remove();
+	//test.peek();
 	System.out.println(test);
     }
 }
