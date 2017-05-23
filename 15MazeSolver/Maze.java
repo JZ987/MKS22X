@@ -19,6 +19,14 @@ public class Maze{
     return end;
   }
 
+  public int getRowLength(){
+    return maze.length;
+  }
+
+  public int getColLength(){
+      return maze[0].length;
+  }
+
   private static String go(int x,int y){
     return ("\033[" + x + ";" + y + "H");
   }
@@ -80,10 +88,11 @@ public class Maze{
     maxRows = maze.length;
     maxCols = maze[0].length;
 
-
     end = new Location(endr,endc,null,0,0,false);
     int d = Math.abs(endr -startr) + Math.abs(startc - endc);
     start = new Location(startr,startc,null,0,d,false);
+    //maze[startr][startc] = 'S';
+    //maze[endr][endc] = 'E';
   }
 
   public String toString(int delay){
@@ -147,4 +156,15 @@ public class Maze{
     }
     return ans;
   }
+
+    public String print(){
+	String temp = "";
+	for(int i = 0; i < maxRows; i++){
+	    for(int j = 0; j < maxCols; j++){
+		temp += maze[i][j];
+	    }
+	    temp += "\n";
+	}
+	return temp;
+    }
 }
