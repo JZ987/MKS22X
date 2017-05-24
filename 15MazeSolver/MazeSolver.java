@@ -41,7 +41,9 @@ public class MazeSolver{
 	int row = -1;
 	int col = -1;
 	while(method.hasNext()){
-	    System.out.println(board.toString(100));
+	    if(animate){
+		System.out.println(board.toString(75));
+	    }
 	    Location current = method.next();
 	    row = current.getRow();
 	    col = current.getCol();
@@ -49,8 +51,10 @@ public class MazeSolver{
 	    if(row == board.getEnd().getRow() &&
 	       col == board.getEnd().getCol()){
 		while(current.getPrev() != null){
-		    System.out.println(board.toString(100));
-		    board.set(current.getRow(), current.getCol(), '@');
+		    if(animate){
+			System.out.println(board.toString(50));
+		    }
+		    board.set(current.getPrev().getRow(), current.getPrev().getCol(), '@');
 		    current = current.getPrev();
 		}
 		return;
@@ -66,7 +70,9 @@ public class MazeSolver{
 	int row = -1;
 	int col = -1;
 	while(method.hasNext()){
-	    System.out.println(board.toString(100));
+	    if(animate){
+		System.out.println(board.toString(75));
+	    }
 	    Location current = method.next();
 	    row = current.getRow();
 	    col = current.getCol();
@@ -74,8 +80,10 @@ public class MazeSolver{
 	    if(row == board.getEnd().getRow() &&
 	       col == board.getEnd().getCol()){
 		while(current.getPrev() != null){
-		    System.out.println(board.toString(100));
-		    board.set(current.getRow(), current.getCol(), '@');
+		    if(animate){
+			System.out.println(board.toString(50));
+		    }
+		    board.set(current.getPrev().getRow(), current.getPrev().getCol(), '@');
 		    current = current.getPrev();
 		}
 		return;
@@ -87,35 +95,93 @@ public class MazeSolver{
     private void bestFirstSearch(){
 	method = new FrontierPriorityQueue();
 	aStar = false;
+	method.add(board.getStart());
+	int row = -1;
+	int col = -1;
+	while(method.hasNext()){
+	    if(animate){
+		System.out.println(board.toString(500));
+	    }
+	    Location current = method.next();
+	    row = current.getRow();
+	    col = current.getCol();
+	    board.set(row, col, '.');
+	    System.out.println("Distance to end: " + calcDistance(current, board.getEnd()) + " Distance to start: " + calcDistance(current, board.getStart()));
+	    if(row == board.getEnd().getRow() &&
+	       col == board.getEnd().getCol()){
+		while(current.getPrev() != null){
+		    if(animate){
+			System.out.println(board.toString(50));
+		    }
+		    board.set(current.getPrev().getRow(), current.getPrev().getCol(), '@');
+		    current = current.getPrev();
+		}
+		return;
+	    }
+	    process(current);
+	}
+	
     }
 
     private void aStarSearch(){
 	method = new FrontierPriorityQueue();
 	aStar = true;
+	method.add(board.getStart());
+	int row = -1;
+	int col = -1;
+	while(method.hasNext()){
+	    if(animate){
+		System.out.println(board.toString(75));
+	    }
+	    Location current = method.next();
+	    row = current.getRow();
+	    col = current.getCol();
+	    board.set(row, col, '.');
+	    if(row == board.getEnd().getRow() &&
+	       col == board.getEnd().getCol()){
+		while(current.getPrev() != null){
+		    if(animate){
+			System.out.println(board.toString(50));
+		    }
+		    board.set(current.getPrev().getRow(), current.getPrev().getCol(), '@');
+		    current = current.getPrev();
+		}
+		return;
+	    }
+	    process(current);
+	}
     }	 
 
     private void process(Location current){
 	int row = current.getRow();
 	int col = current.getCol();
-	if(isValid(row+1, col)){
-	    method.add(new Location(row+1, col, current,
-				    calcDistance(row+1, col, board.getStart()),
-				    calcDistance(row+1, col, board.getEnd()), aStar));
+	if(isValid(row, col+1)){
+	    method.add(new Location(row, col+1, current,
+				    calcDistance(row, col+1, board.getStart()),
+				    calcDistance(row, col+1, board.getEnd()), aStar));
+	    board.set(row, col+1, '?');
+	    //System.out.println("right");
 	}
 	if(isValid(row-1, col)){
 	    method.add(new Location(row-1, col, current,
 				    calcDistance(row-1, col, board.getStart()),
 				    calcDistance(row-1, col, board.getEnd()), aStar));
+	    board.set(row-1, col, '?');
+	    //System.out.println("up");
 	}
-	if(isValid(row, col+1)){
-	    method.add(new Location(row, col+1, current,
-				    calcDistance(row, col+1, board.getStart()),
-				    calcDistance(row, col+1, board.getEnd()), aStar));
+	if(isValid(row+1, col)){
+	    method.add(new Location(row+1, col, current,
+				    calcDistance(row+1, col, board.getStart()),
+				    calcDistance(row+1, col, board.getEnd()), aStar));
+	    board.set(row+1, col, '?');
+	    //System.out.println("down");
 	}
 	if(isValid(row, col-1)){
 	    method.add(new Location(row, col-1, current,
 				    calcDistance(row, col-1, board.getStart()),
 				    calcDistance(row, col-1, board.getEnd()), aStar));
+	    board.set(row, col-1, '?');
+	    //System.out.println("left");
 	}
     }
 

@@ -3,9 +3,45 @@ import java.util.NoSuchElementException;
 
 public class PriorityQueue{
 
-    private ArrayList<Location> heap;
-    private int size;
+    private ArrayList<Location> queue;
 
+    public PriorityQueue(){
+	queue = new ArrayList<Location>();
+    }
+
+    public void add(Location location){
+	if(queue.size() == 0){
+	    queue.add(location);
+	    return;
+	}
+	for(int i = 0; i < queue.size(); i++){
+	    if(location.compareTo(queue.get(i)) < 0){
+		queue.add(i, location);
+		return;
+	    }
+	}
+	queue.add(location);
+    }
+
+    public Location getFirst(){
+	return queue.remove(0);
+    }
+
+    public boolean isEmpty(){
+	return queue.isEmpty();
+    }
+
+    public int getSize(){
+	return queue.size();
+    }
+}
+    
+
+
+
+
+	
+    /*
     public PriorityQueue(){
 	heap = new ArrayList<Location>();
 	heap.add(null);
@@ -44,16 +80,16 @@ public class PriorityQueue{
 	    if(size >= n*2+1){
 		if(heap.get(n).compareTo(heap.get(n*2)) > 0 && 
 		   heap.get(n).compareTo(heap.get(n*2+1)) > 0){
-		    if(heap.get(n*2+1).compareTo(heap.get(n*2+2)) <= 0){
+		    if(heap.get(n*2).compareTo(heap.get(n*2+1)) < 0){
+			swap(n, n*2);
+			n *= 2;
+		    }else if(heap.get(n*2+1).compareTo(heap.get(n*2)) < 0){
 			swap(n, n*2+1);
 			n = n * 2 + 1;
-		}else{
-			swap(n, n*2+2);
-			n = n * 2 + 2;
 		    }
 		}
 	    }else{
-		if(heap.get(n).compareTo(heap.get(n*2+1)) <= 0){
+		if(heap.get(n).compareTo(heap.get(n*2)) < 0){
 		    return;
 		}else{
 		    swap(n, n*2+1);
@@ -80,4 +116,5 @@ public class PriorityQueue{
     public int getSize(){
 	return heap.size();
     }
-}
+    }*/
+
