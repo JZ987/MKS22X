@@ -1,6 +1,6 @@
 public class Location implements Comparable<Location>{
 
-    private int row, col, distToStart, distToGoal;
+    private int row, col, distToGoal, distToStart;
     private Location previous;
     private boolean aStar;
 
@@ -34,7 +34,7 @@ public class Location implements Comparable<Location>{
     }
 
     public int compareTo(Location other){
-	if(this.aStar){
+	if(aStar){
 	    return (this.distToStart + this.distToGoal) - (other.distToStart + other.distToGoal);
 	}else{
 	    return this.distToGoal - other.distToGoal;
