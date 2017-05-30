@@ -157,7 +157,8 @@ public class MazeSolver{
     private void process(Location current){
 	int row = current.getRow();
 	int col = current.getCol();
-	distToStart++;
+	distToStart = current.getDistToStart() + 1;
+	System.out.println("Distance from start: " + distToStart);
 	if(isValid(row, col+1)){
 	    method.add(new Location(row, col+1, current,
 				    distToStart,
