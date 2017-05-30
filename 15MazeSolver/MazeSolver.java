@@ -5,6 +5,7 @@ public class MazeSolver{
     private Maze board;
     private Frontier method;
     private boolean animate, aStar = false;
+    private int distToStart;
 
     public MazeSolver(String fileName){
 	this(fileName, false);
@@ -13,6 +14,7 @@ public class MazeSolver{
     public MazeSolver(String fileName, boolean animate){
 	board = new Maze(fileName);
 	this.animate = animate;
+	distToStart = 0;
     }
     
     public void solve(){
@@ -100,13 +102,13 @@ public class MazeSolver{
 	int col = -1;
 	while(method.hasNext()){
 	    if(animate){
-		System.out.println(board.toString(500));
+		System.out.println(board.toString(50));
 	    }
 	    Location current = method.next();
 	    row = current.getRow();
 	    col = current.getCol();
 	    board.set(row, col, '.');
-	    System.out.println("Distance to end: " + calcDistance(current, board.getEnd()) + " Distance to start: " + calcDistance(current, board.getStart()));
+	    //System.out.println("Distance to end: " + calcDistance(current, board.getEnd()) + " Distance to start: " + calcDistance(current, board.getStart()));
 	    if(row == board.getEnd().getRow() &&
 	       col == board.getEnd().getCol()){
 		while(current.getPrev() != null){
@@ -131,7 +133,7 @@ public class MazeSolver{
 	int col = -1;
 	while(method.hasNext()){
 	    if(animate){
-		System.out.println(board.toString(75));
+		System.out.println(board.toString(50));
 	    }
 	    Location current = method.next();
 	    row = current.getRow();
@@ -155,30 +157,31 @@ public class MazeSolver{
     private void process(Location current){
 	int row = current.getRow();
 	int col = current.getCol();
+	distToStart++;
 	if(isValid(row, col+1)){
 	    method.add(new Location(row, col+1, current,
-				    calcDistance(row, col+1, board.getStart()),
+				    distToStart,
 				    calcDistance(row, col+1, board.getEnd()), aStar));
 	    board.set(row, col+1, '?');
 	    //System.out.println("right");
 	}
 	if(isValid(row-1, col)){
 	    method.add(new Location(row-1, col, current,
-				    calcDistance(row-1, col, board.getStart()),
+				    distToStart,
 				    calcDistance(row-1, col, board.getEnd()), aStar));
 	    board.set(row-1, col, '?');
 	    //System.out.println("up");
 	}
 	if(isValid(row+1, col)){
 	    method.add(new Location(row+1, col, current,
-				    calcDistance(row+1, col, board.getStart()),
+				    distToStart,
 				    calcDistance(row+1, col, board.getEnd()), aStar));
 	    board.set(row+1, col, '?');
 	    //System.out.println("down");
 	}
 	if(isValid(row, col-1)){
 	    method.add(new Location(row, col-1, current,
-				    calcDistance(row, col-1, board.getStart()),
+				    distToStart,
 				    calcDistance(row, col-1, board.getEnd()), aStar));
 	    board.set(row, col-1, '?');
 	    //System.out.println("left");
